@@ -1,14 +1,14 @@
 (ns rogue.like.kolonize
   (:require [clojure.java.io :as io])
   (:import [squid.squidgrid.map.styled DungeonGen TilesetType]
+           [squid.squidgrid.map DungeonUtility]
            [squidpony.squidcolor SColor SColorFactory]
            [squidpony.squidgrid.gui SGPane]
            [squidpony.squidgrid.gui.awt.event SGKeyListener SGKeyListener$CaptureType ]
            [squidpony.squidgrid.fov TranslucenceWrapperFOV BasicRadiusStrategy]
            [squidpony.squidgrid.gui.swing SwingPane]
-           [java.awt Font Component GridBagLayout GridBagConstraints Insets]
+           [java.awt Font]
            [java.awt.event KeyListener KeyEvent]
-           [javax.swing JOptionPane]
            [java.io File]
            [javax.swing JLabel JPanel JFrame JTextField]
            [javax.swing.event DocumentListener])
@@ -31,9 +31,11 @@
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (.placeText sp 0 0 dungeon SColor/WHITE SColor/BLACK)
+  (.placeText sp 0 0 (DungeonUtility/hashesToLines dungeon) SColor/LIGHT_GRAY SColor/BLACK)
   (.refresh sp)
   (doto (JFrame. "Kolonize")
       (.setContentPane sp)
       (.pack)
       (.setVisible true)))
+
+(-main)
