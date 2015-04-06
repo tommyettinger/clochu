@@ -21,7 +21,9 @@
 (def dungeon (DungeonGen/wallWrap
                (.generate ^DungeonGen dg TilesetType/DEFAULT_DUNGEON (int wide) (int high))))
 
-(defonce ^SwingPane sp 
+(def linear (DungeonUtility/hashesToLines dungeon))
+
+(defonce ^SwingPane sp
   (try (SwingPane. 12 24 wide high
                    (.deriveFont (Font/createFont Font/TRUETYPE_FONT 
                                                  (io/file (io/resource "Rogue-Zodiac.ttf"))) 32.0)) ;
@@ -29,9 +31,9 @@
                                    (Font. Font/MONOSPACED Font/PLAIN 14.0)))))
 
 (defn -main
-  "I don't do a whole lot ... yet."
+  "Get kolonizing that dungeon!"
   [& args]
-  (.placeText sp 0 0 (DungeonUtility/hashesToLines dungeon) SColor/LIGHT_GRAY SColor/BLACK)
+  (.placeText sp 0 0 linear SColor/LIGHT_GRAY SColor/BLACK)
   (.refresh sp)
   (doto (JFrame. "Kolonize")
       (.setContentPane sp)
